@@ -12,74 +12,75 @@ function getComputerChoice(){
     else return 'scissors';
 }
 
-function getHumanChoice(){
-    while(1){
-        let humanChoice = prompt('Pick rock, paper or scissors');
-        humanChoice = humanChoice.toLowerCase();
-        if(humanChoice != 'rock' && humanChoice != 'paper' && humanChoice != 'scissors'){
-            console.log('You input is incorrect, repeat')
-        }
-        else return humanChoice;
-    }
-}
+const results = document.querySelector("#result");
+const score = document.querySelector("#score");
 
 function playRound(humanChoice, computerChoice){
     if(humanChoice === 'rock'){
         if(computerChoice === 'rock'){
-            console.log('Computer pick rock');
-            console.log('Draw');
+            results.textContent = 'Computer pick rock. Draw';
         }
         else if(computerChoice === 'paper'){
-            console.log('Computer pick paper');
-            console.log('You lose. Paper beats rock');
+            results.textContent = 'Computer pick paper. You lose. Paper beats rock';
             computerScore++;
         }
         else if(computerChoice === 'scissors'){
-            console.log('Computer pick scissors');
-            console.log('You win. Rock beats scissors');
+            results.textContent = 'Computer pick scissors. You win. Rock beats scissors';
             humanScore++;
         }
     }
     else if(humanChoice === 'scissors'){
         if(computerChoice === 'scissors'){
-            console.log('Computer pick scissors');
-            console.log('Draw');
+            results.textContent = 'Computer pick scissors. Draw';
         }
         else if(computerChoice === 'rock'){
-            console.log('Computer pick rock');
-            console.log('You lose. Rock beats scissors');
+            results.textContent = 'Computer pick rock. You lose. Rock beats scissors.';
             computerScore++;
         }
         else if(computerChoice === 'paper'){
-            console.log('Computer pick paper');
-            console.log('You win. Scissors beats paper');
+            results.textContent = 'Computer pick paper. You win. Scissors beats paper.';
             humanScore++;
         }
     }
     else if(humanChoice === 'paper'){
         if(computerChoice === 'paper'){
-            console.log('Computer pick paper');
-            console.log('Draw');
+            results.textContent = 'Computer pick paper. Draw';
         }
         else if(computerChoice === 'rock'){
-            console.log('Computer pick rock');
-            console.log('You win. Paper beats rock');
+            results.textContent = 'Computer pick rock. You win. Paper beats rock.';
             humanScore++;
         }
         else if(computerChoice === 'scissors'){
-            console.log('Computer pick scissors');
-            console.log('You lose. Scissors beat paper');
+            results.textContent = 'Computer pick scissors. You lose. Scissors beat paper.';
             computerScore++;
         }
     }
-    console.log(`Score: You ${humanScore} vs Computer ${computerScore}`);
+    score.textContent = `Score: You ${humanScore} vs Computer ${computerScore}`;
 }
 
-function playGame(){
-    for(let i = 0; i < 5; i++){
-        playRound(getHumanChoice(), getComputerChoice());
+let humanChoice = "";
+let menu = document.querySelector("#menu");
+menu.addEventListener("click", (event) => {
+    let target = event.target;
+    humanChoice =  target.id;
+    playRound(humanChoice, getComputerChoice());
+    if(computerScore === 5){
+        results.textContent = "Computer wins!";
+        computerScore = humanScore = 0;
     }
-    console.log(`Total score: You ${humanScore} vs Computer ${computerScore}`);
-}
+    else if (humanScore === 5){
+        results.textContent = "You win! Congratulations!!!"
+        computerScore = humanScore = 0;
+    }
+});
 
-playGame();
+
+// function playGame(){
+//     for(let i = 0; i < 5; i++){
+//         playRound(getHumanChoice(), getComputerChoice());
+//     }
+//     console.log(`Total score: You ${humanScore} vs Computer ${computerScore}`);
+// }
+
+
+//playGame();
